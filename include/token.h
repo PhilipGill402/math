@@ -8,13 +8,28 @@ enum TokenType{
     DIV,
     ADD,
     SUB,
-    EQ,
-    INTEGER_CONST,
-    FLOAT_CONST,
+    ASSIGN,
+    FUNCTION,
+    L_PAREN,
+    R_PAREN,
+    LT,
+    GT,
+    LTE,
+    GTE,
+    EQUAL,
+    NOT_EQUAL,
     END_OF_FILE,
     UNKNOWN,
-    ID
+    ID,
+
+    //RESERVED KEYWORDS
+    LET,
+    INTEGER_CONST,
+    FLOAT_CONST
 };
+
+std::string token_type_to_string(TokenType type);
+TokenType string_to_token_type(std::string type);
 
 class Token{
 public:
