@@ -105,7 +105,7 @@ Var* Parser::variable(){
     Token token = current_token;
     eat(ID);
 
-    return new Var(current_token);
+    return new Var(token);
 }
 
 Assign* Parser::assignment_statement(){
@@ -113,9 +113,11 @@ Assign* Parser::assignment_statement(){
     
     Token token = current_token;
 
-    AST* left = variable();
+    Var* left = variable();
+    
 
     eat(ASSIGN);
+    
 
     AST* right = expr();
 

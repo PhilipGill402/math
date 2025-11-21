@@ -11,5 +11,5 @@ int main(){
 
     interpreter.visit(interpreter.tree);
 
-    std::cout << interpreter.variables.at("x") << "\n";
+    std::cout << interpreter.variables.at("=") << "\n";
 }
