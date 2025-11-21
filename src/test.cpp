@@ -10,4 +10,6 @@ int main(){
     Interpreter interpreter = Interpreter(program_node);
 
     interpreter.visit(interpreter.tree);
+
+    std::cout << interpreter.variables.at("x") << "\n";
 }

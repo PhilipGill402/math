@@ -92,7 +92,8 @@ AST* Interpreter::visit_var(Var* node){
 
 AST* Interpreter::visit_assign(Assign* node){
     Var* var = dynamic_cast<Var*>(node->left);
-    Value* val = dynamic_cast<Value*>(node->right);
+    AST* right = visit(node->right);
+    Value* val = dynamic_cast<Value*>(right);
 
     if (!var){
         throw std::runtime_error("Left side of assignment statement is not a variable in 'visit_assign'");
@@ -101,6 +102,8 @@ AST* Interpreter::visit_assign(Assign* node){
     }
 
     std::string var_name = var->token.value;
+
+    std::cout << var_name << "\n";
     variables.insert({var_name, val});
     
     return new Empty();
