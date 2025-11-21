@@ -9,6 +9,9 @@ Float::Float(double val) : Num(val, true) {};
 Program::Program(std::string given_name, std::vector<AST*> &given_statements) : program_name(given_name), statements(given_statements) {};
 Binary_Op::Binary_Op(AST* given_left, Op* given_op, AST* given_right) : left(given_left), op(given_op), right(given_right) {};
 Var::Var(Token given_token) : token(given_token) {};
+Type::Type(TokenType given_type) : type(given_type) {};
+VarDecl::VarDecl(Var* given_var, Type* given_type) : var(given_var), type(given_type) {};
+VarDecl::VarDecl(Var* given_var, Type* given_type, Assign* given_assignment) : var(given_var), type(given_type), assignment(given_assignment) {};
 Assign::Assign(AST* given_left, Token given_token, AST* given_right) : left(given_left), token(given_token), right(given_right) {};
 
 //helper functions

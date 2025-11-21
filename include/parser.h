@@ -27,5 +27,7 @@ public:
     AST* expr();
     Var* variable();
     Assign* assignment_statement();
+    VarDecl* variable_declaration();
+    Type* type_declaration();
     Program* parse();
 };

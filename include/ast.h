@@ -1,6 +1,7 @@
 #pragma once
 #include "token.h"
 #include <string>
+#include <vector>
 
 //AST base class, everything inherits cfrom here
 class AST{
@@ -62,7 +63,7 @@ public:
     std::string program_name;
     std::vector<AST*> statements = {};
 
-    Program(std::string give_name, std::vector<AST*> &given_statements);
+    Program(std::string give_name, std::vector<AST*>& given_statements);
 };
 
 //AST node for binary operations
@@ -84,6 +85,14 @@ public:
     Var(Token given_token);
 };
 
+//AST node for types
+class Type : public AST{
+public:
+    TokenType type;
+
+    Type(TokenType given_type);
+};
+
 //AST node for assignment of variables
 class Assign : public AST{
 public: 
@@ -92,6 +101,17 @@ public:
     AST* right;
 
     Assign(AST* given_left, Token given_token, AST* given_right);
+};
+
+//AST node for variable declaration
+class VarDecl : public AST{
+public:
+    Var* var;
+    Type* type;
+    Assign* assignment = nullptr;
+
+    VarDecl(Var* given_var, Type* given_type);
+    VarDecl(Var* given_var, Type* given_type, Assign* given_assignment);
 };
 
 

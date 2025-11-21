@@ -22,11 +22,13 @@ enum TokenType{
     END_OF_FILE,
     UNKNOWN,
     ID,
+    INTEGER_CONST,
+    FLOAT_CONST,
 
     //RESERVED KEYWORDS
     LET,
-    INTEGER_CONST,
-    FLOAT_CONST
+    INT,
+    FLOAT
 };
 
 std::string token_type_to_string(TokenType type);

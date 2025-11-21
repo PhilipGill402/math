@@ -22,6 +22,8 @@ Program* Parser::program(){
 
 AST* Parser::statement(){
     if (current_token.type == TokenType::LET){
+        return variable_declaration();
+    } if (current_token.type == TokenType::ID){
         return assignment_statement();
     } else {
         return empty();
@@ -104,21 +106,44 @@ AST* Parser::expr(){
 Var* Parser::variable(){
     Token token = current_token;
     eat(ID);
+    Var* var = new Var(token);
 
-    return new Var(token);
+    return var;
+}
+
+VarDecl* Parser::variable_declaration(){
+    eat(TokenType::LET);
+    Type* type = type_declaration();
+    Var* var = variable();
+    
+    if (current_token.type == TokenType::ASSIGN){
+        Assign* assignment = assignment_statement();
+
+        return new VarDecl(var, type, assignment);
+    }
+
+    return new VarDecl(var, type);
+}
+
+Type* Parser::type_declaration(){
+    TokenType type;
+    if (current_token.type == TokenType::INT){
+        type = TokenType::INT;
+        eat(TokenType::INT);
+    } else if (current_token.type == TokenType::FLOAT){
+        type = TokenType::FLOAT;
+        eat(TokenType::FLOAT);
+    } else {
+        throw std::runtime_error("Expected type at " + std::to_string(current_token.line) + ":" + std::to_string(current_token.col) + ". Not " + current_token.to_string());
+    }
+
+    return new Type(type);
 }
 
 Assign* Parser::assignment_statement(){
-    eat(TokenType::LET);
-    
-    Token token = current_token;
-
     Var* left = variable();
-    
-
+    Token token = left->token;
     eat(ASSIGN);
-    
-
     AST* right = expr();
 
     return new Assign(left, token, right);

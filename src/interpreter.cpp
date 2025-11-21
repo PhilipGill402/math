@@ -103,7 +103,6 @@ AST* Interpreter::visit_assign(Assign* node){
 
     std::string var_name = var->token.value;
 
-    std::cout << var_name << "\n";
     variables.insert({var_name, val});
     
     return new Empty();

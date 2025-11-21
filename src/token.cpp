@@ -27,11 +27,14 @@ std::string token_type_to_string(TokenType type){
         case SEMI:          return "SEMI";
         case END_OF_FILE:   return "EOF";
         case ID:            return "ID";
-
-        //RESERVED KEYWORDS
-        case LET:           return "LET";
         case INTEGER_CONST: return "INTEGER_CONST";
         case FLOAT_CONST:   return "FLOAT_CONST";
+        
+        //RESERVED KEYWORDS
+        case LET:           return "LET";
+        case INT:           return "INT";
+        case FLOAT:         return "FLOAT";
+
         default:            return "UNKNOWN";
     }
 }
@@ -77,6 +80,10 @@ TokenType string_to_token_type(std::string type){
         return TokenType::INTEGER_CONST;
     } else if (type == "FLOAT_CONST"){
         return TokenType::FLOAT_CONST;
+    } else if (type == "INT"){
+        return TokenType::INT;
+    } else if (type == "FLOAT"){
+        return TokenType::FLOAT;
     } else {
         return TokenType::UNKNOWN;
     }
