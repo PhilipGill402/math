@@ -18,9 +18,14 @@ public:
 
     //functions
     void eat(TokenType expected_type);
+    Program* program();
+    std::vector<AST*> statement_list();
+    AST* statement();
+    Empty* empty();
     AST* term();
     AST* factor();
-    AST* exper();
+    AST* expr();
     Var* variable();
     Assign* assignment_statement();
+    Program* parse();
 };

@@ -1,15 +1,13 @@
 #include "lexer.h"
 #include "parser.h"
+#include "interpreter.h"
 
 int main(){
-    std::string program = "let x = 10 + 9\0";
+    std::string program = "let x = 10 + 9;\0";
     Lexer lexer = Lexer(program);
     Parser parser = Parser(lexer);
+    Program* program_node = parser.parse();
+    Interpreter interpreter = Interpreter(program_node);
 
-
-    Token token = lexer.get_next_token();
-    while (token.value != "EOF"){
-        std::cout << token.to_string() << "\n";
-        token = lexer.get_next_token();
-    }
+    interpreter.visit(interpreter.tree);
 }

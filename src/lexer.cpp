@@ -125,6 +125,9 @@ Token Lexer::get_next_token(){
             case ')':
                 advance();
                 return Token(TokenType::R_PAREN, ")", currline, currcol);
+            case ';':
+                advance();
+                return Token(TokenType::SEMI, ";", currline, currcol);
             default:
                 advance();
                 return Token(TokenType::UNKNOWN, "Unknown", currline, currcol);

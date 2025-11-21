@@ -11,6 +11,7 @@ public:
 
 //AST node for operators
 class Op : public AST{
+public:
     std::string op;
 
     Op(std::string given_op);
@@ -55,6 +56,15 @@ public:
     std::string to_string() const override;
 };
 
+//AST node for the whole program
+class Program : public AST{
+public:
+    std::string program_name;
+    std::vector<AST*> statements = {};
+
+    Program(std::string give_name, std::vector<AST*> &given_statements);
+};
+
 //AST node for binary operations
 class Binary_Op : public AST{
 public:
@@ -67,6 +77,7 @@ public:
 
 //AST node for variables
 class Var : public AST{
+public:
     Token token;
     std::string type;
 
@@ -84,4 +95,4 @@ public:
 };
 
 
-
+class Empty : public AST{};

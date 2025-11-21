@@ -18,6 +18,7 @@ enum TokenType{
     GTE,
     EQUAL,
     NOT_EQUAL,
+    SEMI,
     END_OF_FILE,
     UNKNOWN,
     ID,

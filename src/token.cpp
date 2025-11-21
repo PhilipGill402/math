@@ -24,6 +24,7 @@ std::string token_type_to_string(TokenType type){
         case GTE:           return "GREATER_THAN_EQUAL";
         case EQUAL:         return "EQUAL";
         case NOT_EQUAL:     return "NOT_EQUAL";
+        case SEMI:          return "SEMI";
         case END_OF_FILE:   return "EOF";
         case ID:            return "ID";
 
@@ -66,6 +67,8 @@ TokenType string_to_token_type(std::string type){
         return TokenType::EQUAL;
     } else if (type == "NOT_EQUAL"){
         return TokenType::NOT_EQUAL;
+    } else if (type == "SEMI"){
+        return TokenType::SEMI;
     } else if (type == "END_OF_FILE"){
         return TokenType::END_OF_FILE;
     } else if (type == "LET"){
