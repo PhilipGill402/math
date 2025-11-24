@@ -11,8 +11,11 @@ Binary_Op::Binary_Op(AST* given_left, Op* given_op, AST* given_right) : left(giv
 Var::Var(Token given_token) : token(given_token) {};
 Type::Type(TokenType given_type) : type(given_type) {};
 VarDecl::VarDecl(Var* given_var, Type* given_type) : var(given_var), type(given_type) {};
-VarDecl::VarDecl(Var* given_var, Type* given_type, Assign* given_assignment) : var(given_var), type(given_type), assignment(given_assignment) {};
+VarDecl::VarDecl(Var* given_var, Type* given_type, AST* give_val) : var(given_var), type(given_type), val(give_val) {};
 Assign::Assign(AST* given_left, Token given_token, AST* given_right) : left(given_left), token(given_token), right(given_right) {};
+FunctionDecl::FunctionDecl(std::string given_name, std::vector<Param*> &given_parameters, Type* given_return_type, std::string given_value) : name(given_name), parameters(given_parameters), return_type(given_return_type), value(given_value) {};
+Function::Function(Token given_token, Type* given_type) : token(given_token), type(given_type) {};
+Param::Param(std::string given_name, Type* given_type) : name(given_name), type(given_type) {};
 
 //helper functions
 std::string Integer::to_string() const {

@@ -96,7 +96,12 @@ Token Lexer::get_next_token(){
                 return Token(TokenType::ADD, "+", currline, currcol);
             case '-':
                 advance();
-                return Token(TokenType::SUB, "-", currline, currcol);
+                if (current_char == '>'){
+                    advance();
+                    return Token(TokenType::ARROW, "->", currline, currcol);
+                } else {
+                    return Token(TokenType::SUB, "-", currline, currcol);
+                }
             case '*':
                 advance();
                 return Token(TokenType::MUL, "*", currline, currcol);
@@ -128,9 +133,15 @@ Token Lexer::get_next_token(){
             case ';':
                 advance();
                 return Token(TokenType::SEMI, ";", currline, currcol);
+            case ',':
+                advance();
+                return Token(TokenType::COMMA, ",", currline, currcol);
+            case ':':
+                advance();
+                return Token(TokenType::COLON, ":", currline, currcol);
             default:
                 advance();
-                return Token(TokenType::UNKNOWN, "Unknown", currline, currcol);
+                return Token(TokenType::UNKNOWN, std::string() + current_char, currline, currcol);
         }
     }
 
@@ -147,12 +158,17 @@ std::string toUpper(std::string str){
     return new_str;
 }
 
+bool isOperator(char c){
+    //add all new operators here
+    return std::string("+-*/^><=").find(c) != std::string::npos;
+}
+
 Token Lexer::id(){
     std::string val;
     int currline = line;
     int currcol = col;
 
-    while (isalnum(current_char)){
+    while (isalnum(current_char) || isOperator(current_char)){
         val += current_char;
         advance();
     }

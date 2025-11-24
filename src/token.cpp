@@ -25,6 +25,9 @@ std::string token_type_to_string(TokenType type){
         case EQUAL:         return "EQUAL";
         case NOT_EQUAL:     return "NOT_EQUAL";
         case SEMI:          return "SEMI";
+        case COMMA:         return "COMMA";
+        case COLON:         return "COLON";
+        case ARROW:         return "ARROW";
         case END_OF_FILE:   return "EOF";
         case ID:            return "ID";
         case INTEGER_CONST: return "INTEGER_CONST";
@@ -34,6 +37,7 @@ std::string token_type_to_string(TokenType type){
         case LET:           return "LET";
         case INT:           return "INT";
         case FLOAT:         return "FLOAT";
+        case FN:            return "FN";
 
         default:            return "UNKNOWN";
     }
@@ -72,6 +76,12 @@ TokenType string_to_token_type(std::string type){
         return TokenType::NOT_EQUAL;
     } else if (type == "SEMI"){
         return TokenType::SEMI;
+    } else if (type == "COMMA"){
+        return TokenType::COMMA;
+    } else if (type == "COLON"){
+        return TokenType::COLON; 
+    } else if (type == "ARROW"){
+        return TokenType::ARROW;
     } else if (type == "END_OF_FILE"){
         return TokenType::END_OF_FILE;
     } else if (type == "LET"){
@@ -84,6 +94,8 @@ TokenType string_to_token_type(std::string type){
         return TokenType::INT;
     } else if (type == "FLOAT"){
         return TokenType::FLOAT;
+    } else if (type == "FN"){
+        return TokenType::FN;
     } else {
         return TokenType::UNKNOWN;
     }

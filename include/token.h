@@ -19,6 +19,9 @@ enum TokenType{
     EQUAL,
     NOT_EQUAL,
     SEMI,
+    COMMA,
+    COLON,
+    ARROW,
     END_OF_FILE,
     UNKNOWN,
     ID,
@@ -28,7 +31,8 @@ enum TokenType{
     //RESERVED KEYWORDS
     LET,
     INT,
-    FLOAT
+    FLOAT,
+    FN
 };
 
 std::string token_type_to_string(TokenType type);

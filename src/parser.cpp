@@ -23,8 +23,10 @@ Program* Parser::program(){
 AST* Parser::statement(){
     if (current_token.type == TokenType::LET){
         return variable_declaration();
-    } if (current_token.type == TokenType::ID){
+    } else if (current_token.type == TokenType::ID){
         return assignment_statement();
+    } else if (current_token.type == TokenType::FN) {
+        return function_declaration();
     } else {
         return empty();
     }
@@ -117,9 +119,11 @@ VarDecl* Parser::variable_declaration(){
     Var* var = variable();
     
     if (current_token.type == TokenType::ASSIGN){
-        Assign* assignment = assignment_statement();
+        eat(TokenType::ASSIGN);
 
-        return new VarDecl(var, type, assignment);
+        AST* val = expr();
+
+        return new VarDecl(var, type, val);
     }
 
     return new VarDecl(var, type);
@@ -147,6 +151,45 @@ Assign* Parser::assignment_statement(){
     AST* right = expr();
 
     return new Assign(left, token, right);
+}
+
+FunctionDecl* Parser::function_declaration(){
+    eat(TokenType::FN);
+    std::string function_name = current_token.value;
+    eat(ID);
+    std::vector<Param*> parameters = parameter_list(); 
+    eat(ARROW);
+
+    Type* return_type = type_declaration();
+    eat(COLON);
+    std::string value = current_token.value;
+    
+    return new FunctionDecl(function_name, parameters, return_type, value);
+}
+
+std::vector<Param*> Parser::parameter_list(){
+    std::vector<Param*> parameters = {};
+    eat(L_PAREN);
+    Param* param = parameter(); 
+    parameters.push_back(param);
+    
+    while (current_token.type == TokenType::COMMA){
+        eat(COMMA); 
+        Param* param = parameter(); 
+        parameters.push_back(param);
+    }
+    eat(R_PAREN);
+
+    return parameters;
+}
+
+Param* Parser::parameter(){
+    std::string name = current_token.value;
+    eat(ID);
+    eat(COLON);
+    Type* type = type_declaration();
+
+    return new Param(name, type);
 }
 
 Program* Parser::parse(){

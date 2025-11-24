@@ -108,11 +108,39 @@ class VarDecl : public AST{
 public:
     Var* var;
     Type* type;
-    Assign* assignment = nullptr;
+    AST* val = nullptr; 
 
     VarDecl(Var* given_var, Type* given_type);
-    VarDecl(Var* given_var, Type* given_type, Assign* given_assignment);
+    VarDecl(Var* given_var, Type* given_type, AST* val);
 };
 
+//re-evaluate: is it needed??
+class Function : public AST{
+public: 
+    Token token;
+    Type* type;
+
+    Function(Token given_token, Type* given_type);
+};
+
+class Param : public AST{
+public:
+    std::string name;
+    Type* type;
+
+    Param(std::string given_name, Type* given_type);
+};
+
+//AST node for assignment of functions
+class FunctionDecl : public AST{
+public:
+    std::string name;
+    std::vector<Param*> parameters;
+    Type* return_type;
+    //need to add parsing to make this usuable
+    std::string value;
+
+    FunctionDecl(std::string given_name, std::vector<Param*> &given_parameters, Type* given_return_type, std::string given_value);
+};
 
 class Empty : public AST{};

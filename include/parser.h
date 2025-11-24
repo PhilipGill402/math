@@ -29,5 +29,9 @@ public:
     Assign* assignment_statement();
     VarDecl* variable_declaration();
     Type* type_declaration();
+    FunctionDecl* function_declaration();
+    Function* function();
+    Param* parameter();
+    std::vector<Param*> parameter_list();
     Program* parse();
 };

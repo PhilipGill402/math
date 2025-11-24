@@ -17,6 +17,12 @@ AST* Interpreter::visit(AST* node){
         return visit_assign(assign);
     } else if (auto empty = dynamic_cast<Empty*>(node)){
         return visit_empty(empty); 
+    } else if (auto var_decl = dynamic_cast<VarDecl*>(node)){
+        return visit_var_decl(var_decl);
+    } else if (auto type = dynamic_cast<Type*>(node)){
+        return visit_type(type);
+    } else if (auto function_decl = dynamic_cast<FunctionDecl*>(node)){
+        return visit_function_declaration(function_decl);
     } else {
         throw std::runtime_error("Unsupported node in in 'visit'");
     }
@@ -85,7 +91,7 @@ Value* Interpreter::visit_num_binary_op(Binary_Op* node){
 
 AST* Interpreter::visit_var(Var* node){
     std::string var_name = node->token.value;
-    Value* val = variables.at(var_name);
+    Value* val = variables[var_name];
 
     return val;
 }
@@ -94,7 +100,7 @@ AST* Interpreter::visit_assign(Assign* node){
     Var* var = dynamic_cast<Var*>(node->left);
     AST* right = visit(node->right);
     Value* val = dynamic_cast<Value*>(right);
-
+    
     if (!var){
         throw std::runtime_error("Left side of assignment statement is not a variable in 'visit_assign'");
     } else if (!val){
@@ -103,11 +109,47 @@ AST* Interpreter::visit_assign(Assign* node){
 
     std::string var_name = var->token.value;
 
-    variables.insert({var_name, val});
+    variables[var_name] = val;
     
     return new Empty();
 }
 
+AST* Interpreter::visit_var_decl(VarDecl* node){
+    Var* var = node->var;
+    Value* val; 
+
+    if (node->val){
+        AST* expr = visit(node->val);
+        val = dynamic_cast<Value*>(expr);
+    } else {
+        val = new Integer(0);
+    }
+
+    
+    Type* type = node->type;
+
+    if (!var){
+        throw std::runtime_error("Left side of assignment statement is not a variable in 'visit_assign'");
+    } else if (!val){
+        //no value given, just initialize
+        throw std::runtime_error("Right side of assignment statement is not a value in 'visit_assign'"); 
+    } 
+
+    std::string var_name = var->token.value;
+    variables[var_name] = val;
+    
+    return new Empty();
+}
+
+AST* Interpreter::visit_function_declaration(FunctionDecl* node){
+    functions.push_back(node);
+
+    return new Empty();
+}
+
+AST* Interpreter::visit_type(Type* node){
+    return new Empty();
+}
 
 AST* Interpreter::visit_empty(Empty* node){
     return new Empty();

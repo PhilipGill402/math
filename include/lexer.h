@@ -8,7 +8,7 @@
 class Lexer{
     public:
         //fields 
-        const std::vector<std::string> RESERVED_KEYWORDS = {"LET", "INT", "FLOAT"};
+        const std::vector<std::string> RESERVED_KEYWORDS = {"LET", "INT", "FLOAT", "FN"};
         std::string program;
         int pos;
         int line;

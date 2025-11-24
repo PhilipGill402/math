@@ -9,7 +9,8 @@ class Interpreter{
 public:
     //fields
     AST* tree;
-    std::unordered_map<std::string, Value*> variables = {}; 
+    std::unordered_map<std::string, Value*> variables = {};
+    std::vector<FunctionDecl*> functions = {};
 
     //constructor
     Interpreter(AST* root);
@@ -23,5 +24,8 @@ public:
     Value* visit_num_binary_op(Binary_Op* node);
     AST* visit_var(Var* node);
     AST* visit_assign(Assign* node);
+    AST* visit_var_decl(VarDecl* node);
+    AST* visit_type(Type* node);
+    AST* visit_function_declaration(FunctionDecl* node);
     AST* visit_empty(Empty* node);
 };
